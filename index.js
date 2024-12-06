@@ -1,24 +1,34 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const {Client,Events,GatewayIntentBits, Collection}=require('discord.js')
+const {Player} = require("discord-player");
+const{YoutubeiExtractor}=require("discord-player-youtubei")
 require('dotenv').config()
 
-const token=process.env.DISCORD_TOKEN
 
+const token=process.env.DISCORD_TOKEN
 const client = new Client({
     intents: [
         GatewayIntentBits.GuildVoiceStates,
         GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.Guilds
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.MessageContent
     ]
 });
-
+const player=new Player(client)
+player.extractors.register(YoutubeiExtractor, {}).then(r => console.log("Loaded yt extractor"))
+player.extractors.loadDefault("SpotifyExtractor").then(r => console.log('Extractors loaded successfully'));
 client.commands = new Collection();
 
 add_commands()
 add_events()
 
 client.login(token);
+
+
+
+
+
 
 function add_commands()
 {
