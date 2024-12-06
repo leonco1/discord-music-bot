@@ -2,7 +2,6 @@ const { SlashCommandBuilder } = require('discord.js');
 const {ApplicationCommandOptionType} = require('discord.js');
 const {useMainPlayer} = require('discord-player');
 const {isInVoiceChannel} = require('../utility/voicechannel');
-const { YoutubeiExtractor } = require("discord-player-youtubei")
 
 
 module.exports = {
@@ -29,7 +28,7 @@ module.exports = {
             const query = interaction.options.getString('query');
             const searchResult = await player.search(query);
             if (!searchResult.hasTracks()) {
-                return interaction.followUp({ content: 'No results were found!' });
+                return void interaction.followUp({ content: 'No results were found!' });
             }
 
             try {

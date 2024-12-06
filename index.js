@@ -2,7 +2,6 @@ const fs = require('node:fs');
 const path = require('node:path');
 const {Client,Events,GatewayIntentBits, Collection}=require('discord.js')
 const {Player} = require("discord-player");
-const{YoutubeiExtractor}=require("discord-player-youtubei")
 require('dotenv').config()
 
 
@@ -16,20 +15,17 @@ const client = new Client({
     ]
 });
 const player=new Player(client)
-player.extractors.register(YoutubeiExtractor, {}).then(r => console.log("Loaded yt extractor"))
-player.extractors.loadDefault("SpotifyExtractor").then(r => console.log('Extractors loaded successfully'));
+player.extractors.loadDefault().then(r => console.log('Extractors loaded successfully'));
 client.commands = new Collection();
 
+
+player.on("error", (queue, error) => {
+    console.log(`[${queue.guild.name}] Error emitted from the queue: ${error.message}`);
+});
 add_commands()
 add_events()
 
 client.login(token);
-
-
-
-
-
-
 function add_commands()
 {
     const foldersPath = path.join(__dirname, 'commands');
