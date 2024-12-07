@@ -2,6 +2,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const {Client,Events,GatewayIntentBits, Collection}=require('discord.js')
 const {Player} = require("discord-player");
+const{ YoutubeiExtractor}=require('discord-player-youtubei')
 require('dotenv').config()
 
 
@@ -14,16 +15,17 @@ const client = new Client({
         GatewayIntentBits.MessageContent
     ]
 });
-const player=new Player(client)
-player.extractors.loadDefault().then(r => console.log('Extractors loaded successfully'));
+
+
+
 client.commands = new Collection();
-
-
-player.on("error", (queue, error) => {
-    console.log(`[${queue.guild.name}] Error emitted from the queue: ${error.message}`);
-});
 add_commands()
 add_events()
+const player=new Player(client)
+player.extractors.register(YoutubeiExtractor, {}).then(r =>{
+    console.log("Youtube extractor registered")
+})
+player.extractors.loadDefault((ext) => ext !== 'YouTubeExtractor');
 
 client.login(token);
 function add_commands()

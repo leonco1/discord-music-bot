@@ -16,6 +16,7 @@
     "discord.js": "^14.16.3",
     "dotenv": "^16.4.7",
     "ffmpeg": "^0.0.4",
-    "mediaplex": "^1.0.0"
+    "mediaplex": "^1.0.0",
+    "youtube-ext": "^1.1.25"
   }
 }

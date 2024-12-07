@@ -16,10 +16,19 @@ module.exports = {
             await command.execute(interaction);
         } catch (error) {
             console.error(error);
+
+            // If the interaction has already been replied or deferred, we use editReply
             if (interaction.replied || interaction.deferred) {
-                await interaction.followUp({ content: 'There was an error while executing this command!', flags: MessageFlags.Ephemeral });
+                await interaction.editReply({
+                    content: 'There was an error while executing this command!',
+                    flags: MessageFlags.Ephemeral,
+                });
             } else {
-                await interaction.reply({ content: 'There was an error while executing this command!', flags: MessageFlags.Ephemeral });
+                // If the interaction has not been replied yet, we use reply
+                await interaction.reply({
+                    content: 'There was an error while executing this command!',
+                    flags: MessageFlags.Ephemeral,
+                });
             }
         }
     },
