@@ -9,10 +9,10 @@ module.exports = {
         .setName('play')
         .setDescription('Play a song in your channel!')
         .addStringOption(option =>
-            option
-                .setName('query')
-                .setDescription('The song you want to play')
-                .setRequired(true),
+                    option
+                        .setName('query')
+                        .setDescription('The song you want to play')
+                        .setRequired(true),
         ),
     async execute(interaction) {
         const { default: Conf } = await import('conf');
